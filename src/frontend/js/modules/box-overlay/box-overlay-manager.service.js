@@ -7,7 +7,7 @@ require('./box-overlay.constants.js');
 
   angular.module('esn.box-overlay').service('boxOverlayManager', boxOverlayManager);
 
-  function boxOverlayManager($rootScope, $window, $compile, $http, $templateCache, notificationFactory, ESN_BOX_OVERLAY_MAX_WINDOWS) {
+  function boxOverlayManager($rootScope, $window, $compile, $q, notificationFactory, ESN_BOX_OVERLAY_MAX_WINDOWS) {
     var boxTemplateUrl = '/views/modules/box-overlay/box-overlay.html';
     var boxes = [];
 
@@ -255,9 +255,7 @@ require('./box-overlay.constants.js');
     }
 
     function _fetchTemplate() {
-      return $http.get(boxTemplateUrl, {cache: $templateCache}).then(function(res) {
-        return res.data;
-      });
+      return $q.when(require('./box-overlay.pug'));
     }
 
     function _findBoxIndex(box) {
